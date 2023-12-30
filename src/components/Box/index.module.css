@@ -1,0 +1,27 @@
+.colorBox {
+  @apply w-8 h-8 rounded-md cursor-pointer;
+}
+
+.active {
+  @apply border-2 border-black dark:border-white;
+}
+
+.strokeBoxContainer {
+  @apply flex gap-2;
+}
+
+.strokeBox {
+  @apply w-8 h-8 rounded-md cursor-pointer bg-lighter dark:bg-gray-300 flex items-center justify-center text-black;
+}
+
+.strokeLight {
+  @apply font-extralight;
+}
+
+.strokeBold {
+  @apply font-bold;
+}
+
+.strokeBolder {
+  @apply font-extrabold;
+}
