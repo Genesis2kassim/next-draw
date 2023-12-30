@@ -22,6 +22,8 @@ export default function Main() {
 
   //#region STATE MANAGEMENT
   const [undoStack, setUndoStack] = useState<ImageData[]>([]);
+  const [redoStack, setRedoStack] = useState<ImageData[]>([]);
+
   const selectedColor = useRecoilValue(selectedColorAtom);
   const selectedStrokeWidth = useRecoilValue(selectedStrokeWidthAtom);
   const strokeOpacity = useRecoilValue(strokeOpacityAtom);
@@ -39,6 +41,23 @@ export default function Main() {
 
       // Update the Undo Stack
       setUndoStack((prevStack) => prevStack.slice(0, -1));
+
+      setRedoStack((prevStack) => [...prevStack, lastState]);
+    }
+  }
+
+  function redo() {
+    if (redoStack.length > 0) {
+      const canvas = canvasRef.current!;
+      const ctx = contextRef.current!;
+
+      const nextState = redoStack[redoStack.length - 1];
+
+      setRedoStack((prevStack) => prevStack.slice(0, -1));
+
+      ctx.putImageData(nextState, 0, 0);
+
+      setUndoStack((prevStack) => [...prevStack, nextState]);
     }
   }
 
@@ -138,12 +157,11 @@ export default function Main() {
 
   useEffect(() => {
     if (selectedTool === TOOLS.UNDO) {
-      // Undo
       undo();
-      setSelectedTool("DEFAULT");
     } else if (selectedTool === TOOLS.REDO) {
-      // redo();
+      redo();
     }
+    setSelectedTool("DEFAULT");
   }, [selectedTool]);
 
   useEffect(() => {

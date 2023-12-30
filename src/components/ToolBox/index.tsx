@@ -40,7 +40,7 @@ export default function ToolBox() {
         data-tooltip-id="pencil"
         data-tooltip-content="Pencil"
         className={styles.iconWrapper}
-        onClick={() => setSelectedTool("Draw")}
+        onClick={() => setSelectedTool("DRAW")}
       >
         <IoBrush color={iconColor} />
       </div>
