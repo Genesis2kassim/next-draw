@@ -9,12 +9,14 @@ import {
   IoMoonSharp,
   IoStopOutline,
   IoPeople,
+  IoTrashSharp,
 } from "react-icons/io5";
 import { FaEraser, FaRotateLeft, FaRotateRight } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { Tooltip } from "react-tooltip";
 import { useRecoilState } from "recoil";
 import { selectedToolAtom } from "@/state/atoms";
+import { TOOLS } from "@/constants";
 
 export default function ToolBox() {
   // TODO: Handle keyboard shortcuts for selecting tools
@@ -62,7 +64,7 @@ export default function ToolBox() {
         data-tooltip-id="undo"
         data-tooltip-content="Undo"
         className={styles.iconWrapper}
-        onClick={() => setSelectedTool("UNDO")}
+        onClick={() => setSelectedTool(TOOLS.UNDO)}
       >
         <FaRotateLeft color={iconColor} />
       </div>
@@ -70,9 +72,17 @@ export default function ToolBox() {
         data-tooltip-id="redo"
         data-tooltip-content="Redo"
         className={styles.iconWrapper}
-        onClick={() => setSelectedTool("REDO")}
+        onClick={() => setSelectedTool(TOOLS.REDO)}
       >
         <FaRotateRight color={iconColor} />
+      </div>
+      <div
+        data-tooltip-id="clear"
+        data-tooltip-content="Clear the board"
+        className={styles.iconWrapper}
+        onClick={() => setSelectedTool(TOOLS.CLEAR)}
+      >
+        <IoTrashSharp color={iconColor} />
       </div>
       <div
         data-tooltip-id="download"
@@ -109,6 +119,7 @@ export default function ToolBox() {
       <Tooltip id="eraser" />
       <Tooltip id="undo" />
       <Tooltip id="redo" />
+      <Tooltip id="clear" />
       <Tooltip id="download" />
       <Tooltip id="darkMode" />
       <Tooltip id="invite" />

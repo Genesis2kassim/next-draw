@@ -61,6 +61,22 @@ export default function Main() {
     }
   }
 
+  function clearCanvas() {
+    const canvas = canvasRef.current!;
+    const ctx = contextRef.current!;
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Reset the undo and redo stacks
+    setUndoStack([]);
+    setRedoStack([]);
+
+    // Save the initial state after clearing the canvas
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    setUndoStack([imageData]);
+  }
+
   useLayoutEffect(() => {
     if (!canvasRef?.current) return;
 
@@ -160,6 +176,8 @@ export default function Main() {
       undo();
     } else if (selectedTool === TOOLS.REDO) {
       redo();
+    } else if (selectedTool === TOOLS.CLEAR) {
+      clearCanvas();
     }
     setSelectedTool("DEFAULT");
   }, [selectedTool]);

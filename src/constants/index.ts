@@ -8,9 +8,11 @@ const COLORS = {
 };
 
 const TOOLS = {
+  DEFAULT: "DEFAULT",
   DRAW: "DRAW",
   UNDO: "UNDO",
   REDO: "REDO",
+  CLEAR: "CLEAR",
 };
 
 export { COLORS, TOOLS };
