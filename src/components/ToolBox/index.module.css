@@ -1,0 +1,11 @@
+.container {
+  @apply p-2 bg-white dark:bg-dark border-x-2 border-x-primary dark:border-none w-auto flex gap-6 mx-auto rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)];
+}
+
+.iconWrapper {
+  @apply p-2 hover:bg-primary dark:hover:bg-gray-500 active:bg-primary cursor-pointer rounded-lg;
+}
+
+.more {
+  @apply bg-lighter dark:bg-dark dark:border dark:border-gray-500 flex rounded-xl;
+}
