@@ -23,4 +23,20 @@ const selectedStrokeWidthAtom = atom({
   default: 5 as number,
 });
 
-export { darkModeAtom, selectedColorAtom, selectedStrokeWidthAtom };
+const strokeOpacityAtom = atom({
+  key: "strokeOpacity",
+  default: 1 as number,
+});
+
+const selectedToolAtom = atom({
+  key: "selectedTool",
+  default: "" as string,
+});
+
+export {
+  darkModeAtom,
+  selectedColorAtom,
+  selectedStrokeWidthAtom,
+  strokeOpacityAtom,
+  selectedToolAtom,
+};

@@ -10,10 +10,10 @@ const Cursor = () => {
   const [isPointer, setIsPointer] = useState(false);
   const selectedStrokeWidth = useRecoilValue(selectedStrokeWidthAtom);
 
-  const handleMouseMove = (e: any) => {
+  const handleMouseMove = (e: MouseEvent) => {
     setPosition({ x: e.clientX, y: e.clientY });
 
-    const target = e.target;
+    const target = e.target as HTMLElement;
 
     setIsPointer(
       window.getComputedStyle(target).getPropertyValue("cursor") === "pointer"

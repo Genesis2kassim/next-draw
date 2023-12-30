@@ -3,16 +3,44 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styles from "./index.module.css";
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { selectedColorAtom, selectedStrokeWidthAtom } from "@/state/atoms";
+import {
+  selectedColorAtom,
+  selectedStrokeWidthAtom,
+  selectedToolAtom,
+  strokeOpacityAtom,
+} from "@/state/atoms";
+import { hexToRgb } from "@/utils";
+import { TOOLS } from "@/constants";
 
 export default function Main() {
+  //#region REFS
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+  const isDrawing = useRef(false);
+  const initialImageRef = useRef<ImageData | null>(null);
+  //#endregion
 
+  //#region STATE MANAGEMENT
+  const [undoStack, setUndoStack] = useState<ImageData[]>([]);
   const selectedColor = useRecoilValue(selectedColorAtom);
   const selectedStrokeWidth = useRecoilValue(selectedStrokeWidthAtom);
-  const isDrawing = useRef(false);
+  const strokeOpacity = useRecoilValue(strokeOpacityAtom);
+  const [selectedTool, setSelectedTool] = useRecoilState(selectedToolAtom);
+  //#endregion
+
+  function undo() {
+    if (undoStack.length > 0) {
+      const canvas = canvasRef.current!;
+      const ctx = contextRef.current!;
+      const lastState = undoStack[undoStack.length - 1];
+
+      // Restore previous state
+      ctx.putImageData(lastState, 0, 0);
+
+      // Update the Undo Stack
+      setUndoStack((prevStack) => prevStack.slice(0, -1));
+    }
+  }
 
   useLayoutEffect(() => {
     if (!canvasRef?.current) return;
@@ -24,15 +52,22 @@ export default function Main() {
     const ctx = canvas.getContext("2d");
     if (ctx) {
       ctx.scale(2, 2);
-      ctx.strokeStyle = selectedColor;
+      const colorWithOpacity = `rgba(${hexToRgb(
+        selectedColor
+      )}, ${strokeOpacity})`;
+      ctx.strokeStyle = colorWithOpacity;
       ctx.lineWidth = selectedStrokeWidth;
       ctx.lineCap = "round";
       contextRef.current = ctx;
-    }
 
-    canvas.onmousedown = startDrawing;
-    canvas.onmousemove = draw;
-    canvas.onmouseup = stopDrawing;
+      initialImageRef.current = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+      setUndoStack([initialImageRef.current]);
+    }
 
     function getCoordinates(e: MouseEvent | TouchEvent) {
       let x, y;
@@ -64,10 +99,25 @@ export default function Main() {
     });
 
     function startDrawing(e: MouseEvent | TouchEvent) {
-      isDrawing.current = true;
       const { offsetX, offsetY } = getCoordinates(e);
       contextRef.current?.beginPath();
       contextRef.current?.moveTo(offsetX, offsetY);
+
+      if (!isDrawing.current) {
+        // Save current state in Undo Stack
+        const canvas = canvasRef.current!;
+        const imageData = contextRef.current?.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+        if (imageData) {
+          setUndoStack((prevStack) => [...prevStack, imageData]);
+        }
+      }
+
+      isDrawing.current = true;
     }
 
     function draw(e: MouseEvent | TouchEvent) {
@@ -81,27 +131,42 @@ export default function Main() {
     }
 
     function stopDrawing() {
+      contextRef.current?.closePath();
       isDrawing.current = false;
     }
   }, []);
+
+  useEffect(() => {
+    if (selectedTool === TOOLS.UNDO) {
+      // Undo
+      undo();
+      setSelectedTool("DEFAULT");
+    } else if (selectedTool === TOOLS.REDO) {
+      // redo();
+    }
+  }, [selectedTool]);
 
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    const changeConfig = (color: string, size: number) => {
+    const changeConfig = (color: string, size: number, opacity: number) => {
       if (ctx) {
-        ctx.strokeStyle = color;
+        const colorWithOpacity = `rgba(${hexToRgb(
+          selectedColor
+        )}, ${strokeOpacity})`;
+        ctx.fillStyle = colorWithOpacity;
+        ctx.strokeStyle = colorWithOpacity;
         ctx.lineWidth = size;
       }
     };
 
     const handleChangeConfig = (config: any) => {
-      changeConfig(config.color, config.size);
+      changeConfig(config.color, config.size, config.opacity);
     };
-    changeConfig(selectedColor, selectedStrokeWidth);
-  }, [selectedColor, selectedStrokeWidth]);
+    changeConfig(selectedColor, selectedStrokeWidth, strokeOpacity);
+  }, [selectedColor, selectedStrokeWidth, strokeOpacity]);
 
   return <canvas className={styles.container} ref={canvasRef}></canvas>;
 }

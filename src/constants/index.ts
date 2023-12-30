@@ -7,4 +7,10 @@ const COLORS = {
   YELLOW: "#f08c00",
 };
 
-export { COLORS };
+const TOOLS = {
+  DRAW: "DRAW",
+  UNDO: "UNDO",
+  REDO: "REDO",
+};
+
+export { COLORS, TOOLS };

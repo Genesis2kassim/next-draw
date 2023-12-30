@@ -13,11 +13,15 @@ import {
 import { FaEraser, FaRotateLeft, FaRotateRight } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { Tooltip } from "react-tooltip";
+import { useRecoilState } from "recoil";
+import { selectedToolAtom } from "@/state/atoms";
 
 export default function ToolBox() {
   // TODO: Handle keyboard shortcuts for selecting tools
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  const [selectedTool, setSelectedTool] = useRecoilState(selectedToolAtom);
 
   const isDark = theme === "dark";
   const iconColor = isDark ? "#fff" : "#000";
@@ -36,6 +40,7 @@ export default function ToolBox() {
         data-tooltip-id="pencil"
         data-tooltip-content="Pencil"
         className={styles.iconWrapper}
+        onClick={() => setSelectedTool("Draw")}
       >
         <IoBrush color={iconColor} />
       </div>
@@ -57,6 +62,7 @@ export default function ToolBox() {
         data-tooltip-id="undo"
         data-tooltip-content="Undo"
         className={styles.iconWrapper}
+        onClick={() => setSelectedTool("UNDO")}
       >
         <FaRotateLeft color={iconColor} />
       </div>
@@ -64,6 +70,7 @@ export default function ToolBox() {
         data-tooltip-id="redo"
         data-tooltip-content="Redo"
         className={styles.iconWrapper}
+        onClick={() => setSelectedTool("REDO")}
       >
         <FaRotateRight color={iconColor} />
       </div>
