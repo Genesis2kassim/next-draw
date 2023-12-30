@@ -17,6 +17,7 @@ import { Tooltip } from "react-tooltip";
 import { useRecoilState } from "recoil";
 import { selectedToolAtom } from "@/state/atoms";
 import { TOOLS } from "@/constants";
+import More from "./More";
 
 export default function ToolBox() {
   // TODO: Handle keyboard shortcuts for selecting tools
@@ -91,28 +92,7 @@ export default function ToolBox() {
       >
         <IoDownload color={iconColor} />
       </div>
-      <div className={styles.more}>
-        <div
-          data-tooltip-id="darkMode"
-          data-tooltip-content="Toggle dark mode"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className={styles.iconWrapper}
-        >
-          {theme === "dark" ? (
-            <IoSunnySharp color={iconColor} />
-          ) : (
-            <IoMoonSharp color={iconColor} />
-          )}
-        </div>
-        <div
-          data-tooltip-id="invite"
-          data-tooltip-content="Invite people"
-          className={styles.iconWrapper}
-        >
-          <IoPeople color={iconColor} />
-        </div>
-      </div>
-
+      <More />
       {/* Tooltips ref */}
       <Tooltip id="pencil" />
       <Tooltip id="rectangle" />
@@ -121,8 +101,6 @@ export default function ToolBox() {
       <Tooltip id="redo" />
       <Tooltip id="clear" />
       <Tooltip id="download" />
-      <Tooltip id="darkMode" />
-      <Tooltip id="invite" />
     </div>
   );
 }
