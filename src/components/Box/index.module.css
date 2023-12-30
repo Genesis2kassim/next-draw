@@ -1,5 +1,5 @@
 .colorBox {
-  @apply w-8 h-8 rounded-md cursor-pointer;
+  @apply w-6 h-6 rounded-md cursor-pointer;
 }
 
 .active {
@@ -11,7 +11,7 @@
 }
 
 .strokeBox {
-  @apply w-8 h-8 rounded-md cursor-pointer bg-lighter dark:bg-gray-300 flex items-center justify-center text-black;
+  @apply w-6 h-6 rounded-md cursor-pointer bg-lighter dark:bg-gray-300 flex items-center justify-center text-black;
 }
 
 .strokeLight {

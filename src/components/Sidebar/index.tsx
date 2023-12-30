@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import styles from "./index.module.css";
 import Heading from "../Typography/Heading";
-import InlineColorPicker from "../Color/InlineColorPicker";
+import InlineColorPicker from "../ColorPicker/InlineColorPicker";
 import { COLORS } from "@/constants";
 import { useRecoilState } from "recoil";
 import { selectedColorAtom, selectedStrokeWidthAtom } from "@/state/atoms";

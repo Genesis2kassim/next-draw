@@ -3,9 +3,9 @@ import styles from "./index.module.css";
 import StrokeBox from "./StrokeBox";
 
 const strokeWidths = [
-  { value: 1, className: styles.strokeLight },
-  { value: 5, className: styles.strokeBold },
-  { value: 10, className: styles.strokeBolder },
+  { value: 5, className: styles.strokeLight },
+  { value: 10, className: styles.strokeBold },
+  { value: 15, className: styles.strokeBolder },
 ];
 
 type StrokeListProps = {

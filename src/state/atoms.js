@@ -11,13 +11,13 @@ const darkModeAtom = atom({
 
 const selectedColorAtom = atom({
   key: "selectedColor",
-  default: undefined,
+  default: "#000",
   effects: [persistAtom],
 });
 
 const selectedStrokeWidthAtom = atom({
   key: "selectedStrokeWidth",
-  default: 1,
+  default: 5,
 });
 
 export { darkModeAtom, selectedColorAtom, selectedStrokeWidthAtom };

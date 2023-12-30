@@ -1,3 +1,4 @@
+import Main from "@/components/Main";
 import Sidebar from "@/components/Sidebar";
 import ToolBox from "@/components/ToolBox";
 
@@ -6,6 +7,7 @@ export default function Home() {
     <main>
       <ToolBox />
       <Sidebar />
+      <Main />
     </main>
   );
 }
