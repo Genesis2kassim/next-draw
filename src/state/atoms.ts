@@ -1,3 +1,6 @@
+"use client";
+
+import React, { useRef } from "react";
 import { atom, DefaultValue } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
@@ -11,13 +14,13 @@ const darkModeAtom = atom({
 
 const selectedColorAtom = atom({
   key: "selectedColor",
-  default: "#000",
+  default: "#000" as string,
   effects: [persistAtom],
 });
 
 const selectedStrokeWidthAtom = atom({
   key: "selectedStrokeWidth",
-  default: 5,
+  default: 5 as number,
 });
 
 export { darkModeAtom, selectedColorAtom, selectedStrokeWidthAtom };

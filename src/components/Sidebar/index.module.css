@@ -1,7 +1,7 @@
 .container {
-  @apply z-20 bg-white dark:bg-dark mt-8 px-2 py-3 mr-auto rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)];
+  @apply cursor-pointer z-20 bg-white dark:bg-dark mt-8 px-2 py-3 mr-auto rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)];
 }
 
 .item {
-  @apply mb-4;
+  @apply cursor-pointer mb-4;
 }

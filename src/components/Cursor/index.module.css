@@ -1,0 +1,5 @@
+.cursor {
+  @apply fixed top-0 left-0 z-[15] border border-white rounded-[50%] mix-blend-difference pointer-events-none bg-white p-0 flex items-center justify-center -translate-x-2/4 -translate-y-2/4 backdrop-blur-[1px];
+
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}

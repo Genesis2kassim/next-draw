@@ -1,5 +1,5 @@
 .container {
-  @apply z-20 p-2 bg-white dark:bg-dark border-x-2 border-x-primary dark:border-none w-auto flex gap-4 mx-auto rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)];
+  @apply cursor-default z-20 p-2 bg-white dark:bg-dark border-x-2 border-x-primary dark:border-none w-auto flex gap-4 mx-auto rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)];
 }
 
 .iconWrapper {
