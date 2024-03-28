@@ -5,10 +5,13 @@ import styles from "./index.module.css";
 import { Tooltip } from "react-tooltip";
 import { useTheme } from "next-themes";
 import { IoMoonSharp, IoPeople, IoSunnySharp } from "react-icons/io5";
+import { useMediaQuery } from "@/lib/hook/useMediaQuery";
 
 export default function More() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const isDark = theme === "dark";
   const iconColor = isDark ? "#fff" : "#000";
@@ -41,8 +44,13 @@ export default function More() {
       >
         <IoPeople color={iconColor} />
       </div>
-      <Tooltip id="darkMode" />
-      <Tooltip id="invite" />
+
+      {isDesktop && (
+        <>
+          <Tooltip id="darkMode" />
+          <Tooltip id="invite" />
+        </>
+      )}
     </div>
   );
 }
