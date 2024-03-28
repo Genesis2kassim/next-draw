@@ -18,11 +18,14 @@ import { useRecoilState } from "recoil";
 import { selectedToolAtom } from "@/state/atoms";
 import { TOOLS } from "@/constants";
 import More from "./More";
+import { useMediaQuery } from "@/lib/hook/useMediaQuery";
 
 export default function ToolBox() {
   // TODO: Handle keyboard shortcuts for selecting tools
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const [selectedTool, setSelectedTool] = useRecoilState(selectedToolAtom);
 
@@ -94,13 +97,19 @@ export default function ToolBox() {
       </div>
       <More />
       {/* Tooltips ref */}
-      <Tooltip id="pencil" />
-      <Tooltip id="rectangle" />
-      <Tooltip id="eraser" />
-      <Tooltip id="undo" />
-      <Tooltip id="redo" />
-      <Tooltip id="clear" />
-      <Tooltip id="download" />
+
+      {isDesktop && (
+        <>
+          {" "}
+          <Tooltip id="pencil" />
+          <Tooltip id="rectangle" />
+          <Tooltip id="eraser" />
+          <Tooltip id="undo" />
+          <Tooltip id="redo" />
+          <Tooltip id="clear" />
+          <Tooltip id="download" />
+        </>
+      )}
     </div>
   );
 }
