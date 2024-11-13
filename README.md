@@ -21,3 +21,5 @@ A simple hand drawing application using Next.js.
 - Authentication
 
 - Inviting people and real time editing between clients
+
+- How is it ?
